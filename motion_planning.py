@@ -32,6 +32,10 @@ class MotionPlanning(Drone):
         self.in_mission = True
         self.check_state = {}
 
+        # Set Goal state
+        self.goal_location_longitude = -121.397450
+        self.goal_location_latitude = 38.792480
+
         # initial state
         self.flight_state = States.MANUAL
 
@@ -154,12 +158,17 @@ class MotionPlanning(Drone):
         # Define starting point on the grid (this is just grid center)
         grid_start = (-north_offset, -east_offset)
 
+        # convert start position to current position rather than map center
+        grid_start = (int(local_pos[0]-north_offset), int(local_pos[1]-east_offset))
         
-        # TODO: convert start position to current position rather than map center
-        
+
         # Set goal as some arbitrary position on the grid
         grid_goal = (-north_offset + 10, -east_offset + 10)
-        # TODO: adapt to set goal as latitude / longitude position and convert
+
+        # adapt to set goal as latitude / longitude position and convert
+        local_goal = global_to_local((self.goal_location_longitude, self,goal_location_latitude, 0), self.global_home)
+        grid_goal = (int(local_goal[0]-north_offset), int(local_goal[1]-east_offset))
+        
 
         # Run A* to find a path from start to goal
         # TODO: add diagonal motions with a cost of sqrt(2) to your A* implementation
