@@ -166,7 +166,7 @@ class MotionPlanning(Drone):
         grid_goal = (-north_offset + 10, -east_offset + 10)
 
         # adapt to set goal as latitude / longitude position and convert
-        local_goal = global_to_local((self.goal_location_longitude, self,goal_location_latitude, 0), self.global_home)
+        local_goal = global_to_local((self.goal_location_longitude, self.goal_location_latitude, 0), self.global_home)
         grid_goal = (int(local_goal[0]-north_offset), int(local_goal[1]-east_offset))
 
 
@@ -200,7 +200,7 @@ class MotionPlanning(Drone):
 
 
     def prune_path(self, path):
-        pruned_paths = [for p in path]
+        pruned_paths = [p for p in path]
 
         i = 0
         while i < (len(pruned_paths) -2):
