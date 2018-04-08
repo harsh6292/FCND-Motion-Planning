@@ -37,6 +37,10 @@ The planning_utils.py consists of following methods:
 #### 1. Set your global home position
 The global home location is set using the set_home_position() method provided by Udacidrone API. The coordinates for home location are provided in the colliders.csv first line. The first line read from the file is first split with comma character and the resulting two strings are again split with space character (motion_planning.py() line 127-137).
 
+The below image shows the drone set to home location provided from colliders.csv file.
+
+![Drone Start Location](./misc/drone_start.png)
+
 
 #### 2. Set your current local position
 I then used Udacidrone API global_to_local() method to convert the geodetic coordinates (latitude, longitude) into local coordinates with the help of drone's current global position provided by Udacidrone API (motion_planning.py() line 140-145).
@@ -55,7 +59,14 @@ To include diagonal motion planning into A* algorithm, I modified the Actions cl
 #### 6. Cull waypoints
 I used the collinearity check to remove unnecessary waypoints from a straight path. First all the points are added to a list of pruned paths. Then for each 3 consecutive points in pruned paths, collinearity check is done. The idea is to check if the matrix formed by these 3 points have a determinant of zero. If a matrix has determinant of zero, then these 3 points are considered to lie in same straight path. The second point from these 3 points is removed from list of pruned paths. At the end we are left only with those points that require drone to change its location or heading.
 
+The below image shows drone executing flight plan with unnecessary waypoints removed from the path.
+
+![Drone Waypoint Location](./misc/drone_waypoint.png)
 
 ### Execute the flight
 #### 1. Does it work?
 It works!
+
+The below image shows drone reaching its final destination.
+
+![Drone Goal Location](./misc/drone_goal.png)
