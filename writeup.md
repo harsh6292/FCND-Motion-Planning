@@ -4,6 +4,16 @@
 ---
 ### Writeup
 
+### How to run the code
+```python
+# Use the below command to run motion_planning.py file with latitude and longitude as the arguments
+
+#python motion_planning.py [latitude] [longitude]
+
+Example:
+python motion_planning.py 37.795043 -122.396235
+```
+
 ### Explain the Starter Code
 
 #### 1. Explain the functionality of what's provided in `motion_planning.py` and `planning_utils.py`
@@ -66,6 +76,12 @@ The below image shows drone executing flight plan with unnecessary waypoints rem
 ### Execute the flight
 #### 1. Does it work?
 It works!
+
+To run the program, following is the command to use:
+
+```python
+python motion_planning.py 37.795043 -122.396235
+```
 
 The below image shows drone reaching its final destination.
 
