@@ -1,6 +1,7 @@
 import argparse
 import time
 import msgpack
+import sys
 from enum import Enum, auto
 
 import numpy as np
@@ -24,7 +25,7 @@ class States(Enum):
 
 class MotionPlanning(Drone):
 
-    def __init__(self, connection):
+    def __init__(self, connection, goal_lat, goal_lon):
         super().__init__(connection)
 
         self.target_position = np.array([0.0, 0.0, 0.0])
@@ -33,8 +34,8 @@ class MotionPlanning(Drone):
         self.check_state = {}
 
         # Set Goal state
-        self.goal_location_longitude = -121.397450
-        self.goal_location_latitude = 38.792480
+        self.goal_location_longitude = goal_lon
+        self.goal_location_latitude = goal_lat
 
         # initial state
         self.flight_state = States.MANUAL
@@ -236,7 +237,18 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     conn = MavlinkConnection('tcp:{0}:{1}'.format(args.host, args.port), timeout=60)
-    drone = MotionPlanning(conn)
+
+    # Default latitude
+    goal_lat = 37.795043
+    goal_lon = -122.396235
+
+    # Get latidude longitude from command line args
+    if (len(sys.argv) == 2):
+        goal_lat = float(sys.argv[0])
+        goal_lon = float(sys.argv[1])
+
+    print("Goal Position from command line args: Latitude: {}, Longitude: {}".format(goal_lat, goal_lon))
+    drone = MotionPlanning(conn, goal_lat, goal_lon)
     time.sleep(1)
 
     drone.start()
